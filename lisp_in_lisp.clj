@@ -68,35 +68,78 @@
 (defn cadar [l] (car (cdr (car l))))
 (defn caddr [l] (car (cdr (cdr l))))
 
+;; -----------------------------------------------------------------------------
+;; Sete primitivas do Lisp original sobre sequências Clojure
+;; -----------------------------------------------------------------------------
+
+;; Definiremos a seguir sete primitivas, que deverão ser as únicas ferramentas
+;; utilizadas para a solução dos exercícios a seguir, além dos próprios exercícios.
+
+;; 1. (quote x) ou 'x, returna x:
+(quote x)
+
+;; 2, (atom? x) retorna o átomo `true` se o valor de `x` for um átomo ou a lista
+;; vazia.
+(atom? 'x)
+(atom? '(a b c))
+(atom? '())
+
+;; 3. (eqv? x y) retorna `true` se os valores de `x` e `y` forem o mesmo átomo ou
+;; ambos são a lista vazia.
+(eqv? 'a 'a)
+(eqv? 'a 'b)
+(eqv? '() '())
+
+;; 4. (car x) espera que o valor de x seja uma lista e retorna o primeiro elemento
+(car '(a b c))
+
+;; 5. (cdr x) espera que o valor de x seja uma lista retorna tudo, exceto o primeiro
+;; elemento
+(cdr '(a b c))
+
+;; 6. (cons x y) espera que o valor de `y` seja um lista e retorna a lista contendo
+;; o alor de `x` seguido dos elementos de `y`
+(cons 'a '(b c))
+(cons 'a (cons 'b (cons 'c '())))
+(car (cons 'a '(b c)))
+(cdr (cons 'a '(b c)))
+
+;; 7. (cond p1 e1 ... pn en) é computado da seguinte maneira:
+;; A expressão `p` é computada em ordem até alguma retornar `true`.
+;; Quando uma é encontrada, o valor da expressão `e` a seguir é
+;; retornada como o valor de toda a expressão `cond`.
+(cond (eqv? 'a 'b) 'first
+      (atom? 'a)   'second)
+
 ;; Observações importantes sobre a representação:
 ;; - usamos listas Clojure, escritas como '(a b c), para representar listas Lisp;
-;; - a lista vazia é '(), e não nil;
+;; - a lista vazia é '(), e não `nil`;
 ;; - car/cdr pressupõem uma lista não vazia, como no material original;
 ;; - a operação cons constrói listas próprias; pares pontuados não são
 ;;   representados nesta versão;
-;; - no mini-Lisp, somente false é falso. nil e '() são tratados como verdadeiros
+;; - no mini-Lisp, somente `false` é falso. `nil` e '() são tratados como verdadeiros
 ;;   quando aparecem como resultados de predicados, como em Scheme.
 
 ;; -----------------------------------------------------------------------------
-;; Os sete exercícios
+;; Os seis exercícios
 ;; -----------------------------------------------------------------------------
 
 ;; Questão 1
-;; Defina my-nil? que recebe um argumento e retorna true se ele for a lista
+;; Defina `my-nil?` que recebe um argumento e retorna true se ele for a lista
 ;; vazia '() e false caso contrário.
 (defn my-nil? [x]
   ;; Implemente aqui usando eqv?.
   nil)
 
 ;; Questão 2
-;; Defina my-and que recebe dois argumentos e retorna true se ambos forem
+;; Defina `my-and` que recebe dois argumentos e retorna true se ambos forem
 ;; verdadeiros; caso contrário, retorna false.
 ;; Para acompanhar Scheme, somente false deve ser considerado falso.
 (defn my-and [x y]
   nil)
 
 ;; Questão 3
-;; Defina my-not que recebe um argumento e retorna false se ele for verdadeiro
+;; Defina `my-not` que recebe um argumento e retorna false se ele for verdadeiro
 ;; e true caso contrário. Somente false deve ser considerado falso.
 (defn my-not [x]
   ;; Implemente aqui.
@@ -113,13 +156,6 @@
   nil)
 
 ;; Questão 5
-;; Defina my-search que recebe x (um valor qualquer) e l (uma lista), retornando
-;; true se x estiver em l e false caso contrário.
-(defn my-search [x l]
-  ;; Implemente aqui usando eqv?.
-  nil)
-
-;; Questão 6
 ;; Defina my-pairs que recebe duas listas x e y e retorna uma lista de pares.
 ;; Cada par reúne os elementos que ocupam a mesma posição nas listas originais.
 ;; A lista resultante termina quando uma das listas terminar.
@@ -128,7 +164,7 @@
   ;; Implemente aqui usando my-nil?, pair?, my-and, car, cdr e cons.
   nil)
 
-;; Questão 7
+;; Questão 6
 ;; Defina my-assoc que recebe x e uma alist y, isto é, uma lista de pares
 ;; ((k1 v1) (k2 v2) ...). Procure o par cuja primeira posição seja igual a x e
 ;; retorne seu segundo elemento. Considere que x será encontrado.
