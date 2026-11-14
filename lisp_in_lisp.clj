@@ -93,7 +93,6 @@
 ;; verdadeiros; caso contrário, retorna false.
 ;; Para acompanhar Scheme, somente false deve ser considerado falso.
 (defn my-and [x y]
-  ;; Implemente aqui sem depender da truthiness de nil do Clojure.
   nil)
 
 ;; Questão 3
